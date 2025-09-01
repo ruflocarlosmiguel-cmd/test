@@ -28,23 +28,13 @@ function checkAll() {
   let logs = [];
 
   // === Add individual answers to logs with section labels ===
-  let sections = {
-    A: [1,2,3,4,5],
-    B: [6,7,8,9,10],
-    C: [11,12,13,14,15],
-    D: [16,17,18,19,20]
-  };
-
-  for (let section in sections) {
-    logs.push(`--- Section ${section} ---`);
-    sections[section].forEach((qNum, idx) => {
-      let val = results[`q${qNum}`];
-      if (val !== null) {
-        logs.push(`${section}${idx+1}: ${val} (${interpret(val)})`);
-      } else {
-        logs.push(`${section}${idx+1}: No answer`);
-      }
-    });
+  for (let i = 1; i <= 20; i++) {
+  let val = results[`q${i}`];
+  if (val !== null) {
+    logs.push(`Q${i}: ${val} (${interpret(val)})`);
+  } else {
+    logs.push(`Q${i}: No answer`);
+  }
 }
 
 
