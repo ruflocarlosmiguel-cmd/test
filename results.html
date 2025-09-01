@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Survey Results (Admin Only)</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h2>Survey Logs</h2>
+  <div id="logContainer"></div>
+
+  <script>
+    // Simple password protection
+    let pass = prompt("Enter admin password:");
+    if (pass !== "admin123") {  // change this password
+      document.body.innerHTML = "<h3>Access Denied</h3>";
+    } else {
+      let logs = JSON.parse(localStorage.getItem("surveyLogs")) || [];
+      let container = document.getElementById("logContainer");
+
+      if (logs.length === 0) {
+        container.innerHTML = "<p>No submissions yet.</p>";
+      } else {
+        logs.forEach((entry, index) => {
+          let block = document.createElement("div");
+          block.style.marginBottom = "20px";
+          block.style.padding = "10px";
+          block.style.border = "1px solid #ccc";
+          
+          block.innerHTML = `
+            <strong>Submission ${index + 1}</strong><br>
+            <em>${entry.timestamp}</em><br>
+            <pre>${entry.logs.join("\n")}</pre>
+          `;
+          container.appendChild(block);
+        });
+      }
+    }
+  </script>
+</body>
+</html>
