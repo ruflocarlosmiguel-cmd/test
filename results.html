@@ -11,9 +11,9 @@
   <div id="logContainer"></div>
 
   <script>
-    // Simple password protection
+    // password protection
     let pass = prompt("Enter admin password:");
-    if (pass !== "admin123") {  // change this password
+    if (pass !== "admin123") {
       document.body.innerHTML = "<h3>Access Denied</h3>";
     } else {
       let logs = JSON.parse(localStorage.getItem("surveyLogs")) || [];
@@ -27,7 +27,7 @@
           block.style.marginBottom = "20px";
           block.style.padding = "10px";
           block.style.border = "1px solid #ccc";
-          
+
           block.innerHTML = `
             <strong>Submission ${index + 1}</strong><br>
             <em>${entry.timestamp}</em><br>

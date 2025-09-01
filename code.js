@@ -1,6 +1,17 @@
 // Reset localStorage for testing (remove in production)
 // localStorage.removeItem("surveyLogs");
 
+function interpret(value) {
+  switch (value) {
+    case 1: return "Strongly Disagree";
+    case 2: return "Disagree";
+    case 3: return "Neutral";
+    case 4: return "Agree";
+    case 5: return "Strongly Agree";
+    default: return "No answer";
+  }
+}
+
 function checkAll() {
   let results = {};
 
@@ -15,6 +26,28 @@ function checkAll() {
   }
 
   let logs = [];
+
+  // === Add individual answers to logs with section labels ===
+  let sections = {
+    A: [1,2,3,4,5],
+    B: [6,7,8,9,10],
+    C: [11,12,13,14,15],
+    D: [16,17,18,19,20]
+  };
+
+  for (let section in sections) {
+    logs.push(`--- Section ${section} ---`);
+    sections[section].forEach((qNum, idx) => {
+      let val = results[`q${qNum}`];
+      if (val !== null) {
+        logs.push(`${section}${idx+1}: ${val} (${interpret(val)})`);
+      } else {
+        logs.push(`${section}${idx+1}: No answer`);
+      }
+    });
+}
+
+
 
   // === Composite Mean ===
   let sum = 0, count = 0;
@@ -112,6 +145,8 @@ function checkAll() {
     logs
   });
   localStorage.setItem("surveyLogs", JSON.stringify(prevLogs));
+
+  // === Add individual answers to logs ===
 
   alert("Submission saved!");
 }
