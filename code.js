@@ -136,7 +136,31 @@ function checkAll() {
   });
   localStorage.setItem("surveyLogs", JSON.stringify(prevLogs));
 
+   fetch("https://script.google.com/macros/s/AKfycbwhDO0oumvpeYlr7aCFYEVSSFyLePMe4YL3ygqfncznXdrwkFZSaH-SlrG5d3v3nFdl/exec", {
+    method: "POST",
+    body: JSON.stringify({
+      ...results,
+      mean,
+      conclusion,
+      subscales,
+      profiles,
+      logs
+    }),
+    headers: {
+      "Content-Type": "application/json"
+    }
+  })
+  .then(res => res.json())
+  .then(data => {
+    console.log("Saved to Google Sheets:", data);
+  })
+  .catch(err => {
+    console.error("Error saving to Google Sheets:", err);
+  });
+
+
   // === Add individual answers to logs ===
 
+  
   alert("Submission saved!");
 }
